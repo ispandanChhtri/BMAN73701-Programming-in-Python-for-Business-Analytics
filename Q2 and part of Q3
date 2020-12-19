@@ -1,0 +1,51 @@
+import pandas as pd
+import numpy as np
+df = pd.read_csv( "dataset.csv" )
+
+dfn=0
+new_n=0
+
+
+#create a function to generate a random samples from the dataset with 10,50,100 jobs as the number of machines remains the same (60)
+
+def create_sample(n_samples):
+    dfn = np.transpose(df.sample(n_samples,axis="columns"))
+    new_n = dfn.fillna(0, inplace= False)
+    return new_n    
+    
+df10 = create_sample(10)
+df50 = create_sample(50)
+df100 = create_sample(100)
+
+print(df10,df50,df100)
+#how to create a table with min, max, mean and sd of the makespan in samples from the dataset
+
+import statistics
+
+data1 = [1,2,3,4,2] # example list of makespan value for dataset 1
+data2 = [5,6,7,8,4,6,7,8] #list of makespan for dataset 2
+data3 = [9,10,11,12,5,6] #list of makespan for dataset 3
+
+
+def create_table_makespan(data):
+    x = statistics.mean(data)
+    a = statistics.stdev(data)
+    y = max(data)
+    z = min(data)
+    return x,a,y,z
+
+# out_vec = []
+# for i in range(len(data_all)):
+#     out_vec[:i]=create_table_makespan(data_all[:i])
+#     table1 = pd.DataFrame(
+
+d1 = create_table_makespan(data1)
+d2 = create_table_makespan(data2)
+d3 = create_table_makespan(data3)
+
+
+table = pd.DataFrame([d1,d2,d3],columns=["mean","sd","max","min"],index=["dataset1","dataset2","dataset3"])
+print(table)
+
+    
+    
